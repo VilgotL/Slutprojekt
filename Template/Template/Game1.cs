@@ -11,6 +11,8 @@ namespace Template
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Bräda spelare;
+
         //KOmentar
         public Game1()
         {
@@ -40,7 +42,8 @@ namespace Template
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            Texture2D texture = Content.Load<Texture2D>("player");
+            spelare = new Bräda(texture, new Vector2(100, 300));
             // TODO: use this.Content to load your game content here 
         }
 
@@ -74,9 +77,11 @@ namespace Template
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here.
+            spriteBatch.Begin();
+            spelare.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
