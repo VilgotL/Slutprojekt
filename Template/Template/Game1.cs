@@ -27,6 +27,7 @@ namespace Template
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            //Hej
 
             base.Initialize();
         }
