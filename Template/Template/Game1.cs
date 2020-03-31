@@ -12,6 +12,7 @@ namespace Template
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Bräda spelare;
+        Boll boll;
 
         //KOmentar
         public Game1()
@@ -42,8 +43,8 @@ namespace Template
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Texture2D texture = Content.Load<Texture2D>("player");
-            spelare = new Bräda(texture, new Vector2(100, 300));
+            spelare = new Bräda(Content.Load<Texture2D>("player"), new Vector2(300, 400));
+            boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 200));
             // TODO: use this.Content to load your game content here 
         }
 
@@ -66,6 +67,8 @@ namespace Template
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            spelare.Update(gameTime);
+            boll.Update(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -81,6 +84,7 @@ namespace Template
 
             spriteBatch.Begin();
             spelare.Draw(spriteBatch);
+            boll.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

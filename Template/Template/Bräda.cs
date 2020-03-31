@@ -16,7 +16,16 @@ namespace Template
 		}
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Draw(texture, position, Color.White);
+			spriteBatch.Draw(texture, new Rectangle(position.ToPoint(), new Point(100, 15)), Color.White);
+		}
+		
+		public virtual void Update(GameTime gameTime)
+		{
+			KeyboardState kstate = Keyboard.GetState();
+			if (kstate.IsKeyDown(Keys.D))
+				position.X += 3;
+			if (kstate.IsKeyDown(Keys.A))
+				position.X -= 3;
 		}
 	}
 }
