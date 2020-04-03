@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System;
 
 namespace Template
 {
@@ -13,11 +15,18 @@ namespace Template
         SpriteBatch spriteBatch;
         Bräda spelare;
         Boll boll;
+        Rectangle vägg1 = new Rectangle(0, 0, 1, 600);
+        Rectangle vägg2 = new Rectangle(1000, 0, 1, 600);
+        Rectangle tak = new Rectangle(0, 0, 1000, 1);
+        Rectangle golv = new Rectangle(0, 600, 1000, 1);
 
         //KOmentar
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1000;  
+            graphics.PreferredBackBufferHeight = 600;   
+            graphics.ApplyChanges();
             Content.RootDirectory = "Content";
         }
 
@@ -43,8 +52,8 @@ namespace Template
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            spelare = new Bräda(Content.Load<Texture2D>("player"), new Vector2(300, 400));
-            boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 200));
+            spelare = new Bräda(Content.Load<Texture2D>("player"), new Vector2(300, 500), new Rectangle(300,500,100,15));
+            boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 100), new Rectangle(300,100,20,17));
             // TODO: use this.Content to load your game content here 
         }
 
@@ -70,6 +79,27 @@ namespace Template
             spelare.Update(gameTime);
             boll.Update(gameTime);
             // TODO: Add your update logic here
+
+            if (boll.Rec.Intersects(spelare.Rec))
+            {
+                boll.StudsaBräda();
+            }
+            if (boll.Rec.Intersects(vägg1))
+            {
+                boll.StudsaX(true);
+            }
+            if (boll.Rec.Intersects(vägg2))
+            {
+                boll.StudsaX(true);
+            }
+            if (boll.Rec.Intersects(tak))
+            {
+                boll.StudsaX(false);
+            }
+            if (boll.Rec.Intersects(golv))
+            {
+                Exit();
+            }
 
             base.Update(gameTime);
         }
