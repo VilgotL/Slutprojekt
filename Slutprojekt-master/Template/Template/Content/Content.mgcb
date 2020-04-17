@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin 270343__littlerobotsoundfactory__shoot-01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:270343__littlerobotsoundfactory__shoot-01.wav
+
 #begin ball.png
 /importer:TextureImporter
 /processor:TextureProcessor
