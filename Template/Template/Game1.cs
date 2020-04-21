@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using System;
 
@@ -15,10 +16,18 @@ namespace Template
         SpriteBatch spriteBatch;
         Bräda spelare;
         Boll boll;
+        List<Kloss> klosslista = new List<Kloss>();
         Rectangle vägg1 = new Rectangle(0, 0, 1, 600);
         Rectangle vägg2 = new Rectangle(1000, 0, 1, 600);
         Rectangle tak = new Rectangle(0, 0, 1000, 1);
         Rectangle golv = new Rectangle(0, 600, 1000, 1);
+        SoundEffect ljud;
+
+        Rectangle rec1 = new Rectangle(400, 150, 3, 30);
+        Rectangle rec2 = new Rectangle(400, 177, 100, 3);
+        Rectangle rec3 = new Rectangle(497, 150, 3, 30);
+        Rectangle rec4 = new Rectangle(400, 150, 100, 3);
+
 
         //KOmentar
         public Game1()
@@ -40,7 +49,6 @@ namespace Template
         {
             // TODO: Add your initialization logic here
             //Hej
-
             base.Initialize();
         }
 
@@ -54,6 +62,21 @@ namespace Template
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spelare = new Bräda(Content.Load<Texture2D>("player"), new Vector2(300, 500), new Rectangle(300,500,100,15));
             boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 100), new Rectangle(300,100,20,17));
+            for (int i = 0; i < 10; i++)
+            {
+                int y = 0;
+                if (i % 2 == 0)
+                {
+                    y = 0;
+                }
+                else
+                {
+                    y = 30;
+                }
+                int x = i * 100;
+                klosslista.Add(new Kloss(Content.Load<Texture2D>("unnamed"), new Vector2(x, y), new Rectangle(x, y, 100, 30)));
+                ljud = Content.Load<SoundEffect>("270343__littlerobotsoundfactory__shoot-01");
+            }
             // TODO: use this.Content to load your game content here 
         }
 
@@ -83,6 +106,15 @@ namespace Template
             if (boll.Rec.Intersects(spelare.Rec))
             {
                 boll.StudsaBräda();
+            }
+            foreach (Kloss element in klosslista)
+            {
+                if (boll.Rec.Intersects(element.Rec))
+                {
+                    boll.StudsaX(false);
+                    element.Krossa();
+                    ljud.Play();
+                }
             }
             if (boll.Rec.Intersects(vägg1))
             {
@@ -115,6 +147,10 @@ namespace Template
             spriteBatch.Begin();
             spelare.Draw(spriteBatch);
             boll.Draw(spriteBatch);
+            foreach (Kloss element in klosslista)
+            {
+                element.Draw(spriteBatch);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
