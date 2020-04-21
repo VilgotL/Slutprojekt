@@ -52,7 +52,7 @@ namespace Template
 		}
 		public void StudsaBräda()
 		{
-			totalFart += 1f;
+			totalFart += 2f;
 			rnd = new Random();
 			double a = rnd.NextDouble();
 			double b = rnd.Next(2, 6);

@@ -34,9 +34,11 @@ namespace Template
 		{
 			KeyboardState kstate = Keyboard.GetState();
 			if (kstate.IsKeyDown(Keys.D))
-				position.X += fart;
+				if (position.X < 900)
+					position.X += fart;
 			if (kstate.IsKeyDown(Keys.A))
-				position.X -= fart;
+				if (position.X > 0)
+					position.X -= fart;
 
 			rec.X = (int)Math.Round(position.X);
 		}

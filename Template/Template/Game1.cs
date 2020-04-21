@@ -23,11 +23,6 @@ namespace Template
         Rectangle golv = new Rectangle(0, 600, 1000, 1);
         SoundEffect ljud;
 
-        Rectangle rec1 = new Rectangle(400, 150, 3, 30);
-        Rectangle rec2 = new Rectangle(400, 177, 100, 3);
-        Rectangle rec3 = new Rectangle(497, 150, 3, 30);
-        Rectangle rec4 = new Rectangle(400, 150, 100, 3);
-
 
         //KOmentar
         public Game1()
@@ -64,18 +59,19 @@ namespace Template
             boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 100), new Rectangle(300,100,20,17));
             for (int i = 0; i < 10; i++)
             {
-                int y = 0;
+                int klossY = 0;
                 if (i % 2 == 0)
                 {
-                    y = 0;
+                    klossY = 0;
                 }
                 else
                 {
-                    y = 30;
+                    klossY = 30;
                 }
-                int x = i * 100;
-                klosslista.Add(new Kloss(Content.Load<Texture2D>("unnamed"), new Vector2(x, y), new Rectangle(x, y, 100, 30)));
+                int klossX = i * 100;
+                klosslista.Add(new Kloss(Content.Load<Texture2D>("unnamed"), new Vector2(klossX, klossY), new Rectangle(klossX, klossY, 100, 30), new Rectangle(klossX, klossY, 3, 30), new Rectangle(klossX, klossY + 27, 100, 3), new Rectangle(klossX + 97, klossY, 3, 30), new Rectangle(klossX, klossY, 100, 3)));
                 ljud = Content.Load<SoundEffect>("270343__littlerobotsoundfactory__shoot-01");
+                
             }
             // TODO: use this.Content to load your game content here 
         }
@@ -111,9 +107,30 @@ namespace Template
             {
                 if (boll.Rec.Intersects(element.Rec))
                 {
-                    boll.StudsaX(false);
-                    element.Krossa();
-                    ljud.Play();
+                    if (boll.Rec.Intersects(element.Rec2))
+                    {
+                        boll.StudsaX(false);
+                        element.Krossa();
+                        ljud.Play(0.5f, 0.0f, 0.0f);
+                    }
+                    else if (boll.Rec.Intersects(element.Rec1))
+                    {
+                        boll.StudsaX(true);
+                        element.Krossa();
+                        ljud.Play(0.5f, 0.0f, 0.0f);
+                    }
+                    else if (boll.Rec.Intersects(element.Rec3))
+                    {
+                        boll.StudsaX(true);
+                        element.Krossa();
+                        ljud.Play(0.5f, 0.0f, 0.0f);
+                    }
+                    else if (boll.Rec.Intersects(element.Rec4))
+                    {
+                        boll.StudsaX(false);
+                        element.Krossa();
+                        ljud.Play(0.5f, 0.0f, 0.0f);
+                    }
                 }
             }
             if (boll.Rec.Intersects(vägg1))
