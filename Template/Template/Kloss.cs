@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Template
 {
@@ -15,9 +16,11 @@ namespace Template
 		private Rectangle rec2;
 		private Rectangle rec3;
 		private Rectangle rec4;
+		private SoundEffect ljud;
 
 
-		public Kloss(Texture2D texture, Vector2 position, Rectangle rec, Rectangle rec1, Rectangle rec2, Rectangle rec3, Rectangle rec4)
+
+		public Kloss(Texture2D texture, Vector2 position, Rectangle rec, Rectangle rec1, Rectangle rec2, Rectangle rec3, Rectangle rec4, SoundEffect ljud)
 		{
 			this.texture = texture;
 			this.position = position;
@@ -26,7 +29,7 @@ namespace Template
 			this.rec2 = rec2;
 			this.rec3 = rec3;
 			this.rec4 = rec4;
-
+			this.ljud = ljud;
 		}
 
 		public Rectangle Rec
@@ -67,6 +70,7 @@ namespace Template
 			rec2.X = (int)Math.Round(position.X);
 			rec3.X = (int)Math.Round(position.X);
 			rec4.X = (int)Math.Round(position.X);
+			ljud.Play(0.5f, 0.0f, 0.0f);
 		}
 	}
 }

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System;
 
 namespace Template
@@ -22,6 +24,7 @@ namespace Template
         Rectangle tak = new Rectangle(0, 0, 1000, 1);
         Rectangle golv = new Rectangle(0, 600, 1000, 1);
         SoundEffect ljud;
+        Stopwatch tid;
 
 
         //KOmentar
@@ -55,8 +58,8 @@ namespace Template
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            spelare = new Bräda(Content.Load<Texture2D>("player"), new Vector2(300, 500), new Rectangle(300,500,100,15));
-            boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 100), new Rectangle(300,100,20,17));
+            spelare = new Bräda(Content.Load<Texture2D>("player"), new Vector2(400, 500), new Rectangle(400, 500, 100, 15));
+            boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 100), new Rectangle(300,100,20,17), Content.Load<SoundEffect>("270343__littlerobotsoundfactory__shoot-01"));
             for (int i = 0; i < 10; i++)
             {
                 int klossY = 0;
@@ -69,10 +72,11 @@ namespace Template
                     klossY = 30;
                 }
                 int klossX = i * 100;
-                klosslista.Add(new Kloss(Content.Load<Texture2D>("unnamed"), new Vector2(klossX, klossY), new Rectangle(klossX, klossY, 100, 30), new Rectangle(klossX, klossY, 3, 30), new Rectangle(klossX, klossY + 27, 100, 3), new Rectangle(klossX + 97, klossY, 3, 30), new Rectangle(klossX, klossY, 100, 3)));
-                ljud = Content.Load<SoundEffect>("270343__littlerobotsoundfactory__shoot-01");
-                
+                klosslista.Add(new Kloss(Content.Load<Texture2D>("unnamed"), new Vector2(klossX, klossY), new Rectangle(klossX, klossY, 100, 30), new Rectangle(klossX, klossY, 3, 30), new Rectangle(klossX+3, klossY + 27, 94, 3), new Rectangle(klossX + 97, klossY, 3, 30), new Rectangle(klossX+3, klossY, 94, 3), Content.Load<SoundEffect>("270343__littlerobotsoundfactory__shoot-01")));
+
+                tid = Stopwatch.StartNew();
             }
+
             // TODO: use this.Content to load your game content here 
         }
 
@@ -111,25 +115,24 @@ namespace Template
                     {
                         boll.StudsaX(false);
                         element.Krossa();
-                        ljud.Play(0.5f, 0.0f, 0.0f);
+                       
                     }
                     else if (boll.Rec.Intersects(element.Rec1))
                     {
                         boll.StudsaX(true);
                         element.Krossa();
-                        ljud.Play(0.5f, 0.0f, 0.0f);
+                   
                     }
                     else if (boll.Rec.Intersects(element.Rec3))
                     {
                         boll.StudsaX(true);
                         element.Krossa();
-                        ljud.Play(0.5f, 0.0f, 0.0f);
+                       
                     }
                     else if (boll.Rec.Intersects(element.Rec4))
                     {
                         boll.StudsaX(false);
                         element.Krossa();
-                        ljud.Play(0.5f, 0.0f, 0.0f);
                     }
                 }
             }
@@ -147,6 +150,7 @@ namespace Template
             }
             if (boll.Rec.Intersects(golv))
             {
+                tid.Stop();
                 Exit();
             }
 

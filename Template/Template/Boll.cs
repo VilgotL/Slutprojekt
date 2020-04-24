@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Template
 {
@@ -13,13 +14,15 @@ namespace Template
 		private float fartY = 4f;
 		private float fartX = 4f;
 		private float totalFart = 35f;
+		private SoundEffect ljud;
 		Random rnd;
 
-		public Boll(Texture2D texture, Vector2 position, Rectangle rec)
+		public Boll(Texture2D texture, Vector2 position, Rectangle rec, SoundEffect ljud)
 		{
 			this.texture = texture;
 			this.position = position;
 			this.rec = rec;
+			this.ljud = ljud;
 		}
 
 		public Rectangle Rec
