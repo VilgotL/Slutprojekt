@@ -13,16 +13,14 @@ namespace Template
 		private Rectangle rec;
 		private float fartY = 4f;
 		private float fartX = 4f;
-		private float totalFart = 35f;
-		private SoundEffect ljud;
+		private float totalFart = 50f;
 		Random rnd;
 
-		public Boll(Texture2D texture, Vector2 position, Rectangle rec, SoundEffect ljud)
+		public Boll(Texture2D texture, Vector2 position, Rectangle rec)
 		{
 			this.texture = texture;
 			this.position = position;
 			this.rec = rec;
-			this.ljud = ljud;
 		}
 
 		public Rectangle Rec

@@ -19,11 +19,11 @@ namespace Template
         Bräda spelare;
         Boll boll;
         List<Kloss> klosslista = new List<Kloss>();
+        Poäng poäng;
         Rectangle vägg1 = new Rectangle(0, 0, 1, 600);
         Rectangle vägg2 = new Rectangle(1000, 0, 1, 600);
         Rectangle tak = new Rectangle(0, 0, 1000, 1);
         Rectangle golv = new Rectangle(0, 600, 1000, 1);
-        SoundEffect ljud;
         Stopwatch tid;
 
 
@@ -58,24 +58,19 @@ namespace Template
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            spelare = new Bräda(Content.Load<Texture2D>("player"), new Vector2(400, 500), new Rectangle(400, 500, 100, 15));
-            boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 100), new Rectangle(300,100,20,17), Content.Load<SoundEffect>("270343__littlerobotsoundfactory__shoot-01"));
-            for (int i = 0; i < 10; i++)
+            spelare = new Bräda(Content.Load<Texture2D>("player"), new Vector2(450, 500), new Rectangle(400, 500, 100, 15));
+            boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 150), new Rectangle(300,100,20,17));
+            poäng = new Poäng(new Vector2(490, 280), Content.Load<SpriteFont>("text"));
+            for (int j = 0; j < 4; j++)
             {
-                int klossY = 0;
-                if (i % 2 == 0)
+                int klossY = j * 30;
+                for (int i = 0; i < 10; i++)
                 {
-                    klossY = 0;
+                    int klossX = i * 100;
+                    klosslista.Add(new Kloss(Content.Load<Texture2D>("unnamed"), new Vector2(klossX, klossY), new Rectangle(klossX, klossY, 100, 30), new Rectangle(klossX, klossY, 3, 30), new Rectangle(klossX + 3, klossY + 27, 94, 3), new Rectangle(klossX + 97, klossY, 3, 30), new Rectangle(klossX + 3, klossY, 94, 3), Content.Load<SoundEffect>("270343__littlerobotsoundfactory__shoot-01")));
                 }
-                else
-                {
-                    klossY = 30;
-                }
-                int klossX = i * 100;
-                klosslista.Add(new Kloss(Content.Load<Texture2D>("unnamed"), new Vector2(klossX, klossY), new Rectangle(klossX, klossY, 100, 30), new Rectangle(klossX, klossY, 3, 30), new Rectangle(klossX+3, klossY + 27, 94, 3), new Rectangle(klossX + 97, klossY, 3, 30), new Rectangle(klossX+3, klossY, 94, 3), Content.Load<SoundEffect>("270343__littlerobotsoundfactory__shoot-01")));
-
-                tid = Stopwatch.StartNew();
             }
+            
 
             // TODO: use this.Content to load your game content here 
         }
@@ -115,24 +110,25 @@ namespace Template
                     {
                         boll.StudsaX(false);
                         element.Krossa();
-                       
+                        poäng.AddPoint();
                     }
                     else if (boll.Rec.Intersects(element.Rec1))
                     {
                         boll.StudsaX(true);
                         element.Krossa();
-                   
+                        poäng.AddPoint();
                     }
                     else if (boll.Rec.Intersects(element.Rec3))
                     {
                         boll.StudsaX(true);
                         element.Krossa();
-                       
+                        poäng.AddPoint();
                     }
                     else if (boll.Rec.Intersects(element.Rec4))
                     {
                         boll.StudsaX(false);
                         element.Krossa();
+                        poäng.AddPoint();
                     }
                 }
             }
@@ -150,7 +146,6 @@ namespace Template
             }
             if (boll.Rec.Intersects(golv))
             {
-                tid.Stop();
                 Exit();
             }
 
@@ -172,6 +167,7 @@ namespace Template
             {
                 element.Draw(spriteBatch);
             }
+            poäng.DrawString(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
