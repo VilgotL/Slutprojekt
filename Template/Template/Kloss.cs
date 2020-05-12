@@ -9,13 +9,18 @@ namespace Template
 {
 	class Kloss
 	{
+		//Textur
 		private Texture2D texture;
+		//Position
 		private Vector2 position;
+		//Hitbox
 		private Rectangle rec;
+		//Hitbox för sidorna
 		private Rectangle rec1;
 		private Rectangle rec2;
 		private Rectangle rec3;
 		private Rectangle rec4;
+		//Ljudeffekt
 		private SoundEffect ljud;
 
 
@@ -57,19 +62,24 @@ namespace Template
 			get { return rec4; }
 		}
 
+		//Ritar ut på skärmen
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
 			spriteBatch.Draw(texture, new Rectangle(position.ToPoint(), new Point(100, 30)), Color.White);
 		}
 
+		//Tar bort klossar
 		public void Krossa()
 		{
+			//Flytta utanför skärmen
 			position.X = 2000;
+			//Flytta hitboxarna till samma plats som texturen
 			rec.X = (int)Math.Round(position.X);
 			rec1.X = (int)Math.Round(position.X);
 			rec2.X = (int)Math.Round(position.X);
 			rec3.X = (int)Math.Round(position.X);
 			rec4.X = (int)Math.Round(position.X);
+			//Spela upp ljudeffekt
 			ljud.Play(0.5f, 0.0f, 0.0f);
 		}
 	}

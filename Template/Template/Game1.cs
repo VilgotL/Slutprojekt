@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System;
 
 namespace Template
@@ -20,16 +19,15 @@ namespace Template
         Boll boll;
         List<Kloss> klosslista = new List<Kloss>();
         Poäng poäng;
+        //Kanterna på skärmen
         Rectangle vägg1 = new Rectangle(0, 0, 1, 600);
         Rectangle vägg2 = new Rectangle(1000, 0, 1, 600);
         Rectangle tak = new Rectangle(0, 0, 1000, 1);
         Rectangle golv = new Rectangle(0, 600, 1000, 1);
-        Stopwatch tid;
 
-
-        //KOmentar
         public Game1()
         {
+            //Skärmstorlek
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1000;  
             graphics.PreferredBackBufferHeight = 600;   
@@ -61,6 +59,7 @@ namespace Template
             spelare = new Bräda(Content.Load<Texture2D>("player"), new Vector2(450, 500), new Rectangle(400, 500, 100, 15));
             boll = new Boll(Content.Load<Texture2D>("ball"), new Vector2(300, 150), new Rectangle(300,100,20,17));
             poäng = new Poäng(new Vector2(490, 280), Content.Load<SpriteFont>("text"));
+            //Placerar ut klossarna i rätt möster
             for (int j = 0; j < 4; j++)
             {
                 int klossY = j * 30;
@@ -70,7 +69,6 @@ namespace Template
                     klosslista.Add(new Kloss(Content.Load<Texture2D>("unnamed"), new Vector2(klossX, klossY), new Rectangle(klossX, klossY, 100, 30), new Rectangle(klossX, klossY, 3, 30), new Rectangle(klossX + 3, klossY + 27, 94, 3), new Rectangle(klossX + 97, klossY, 3, 30), new Rectangle(klossX + 3, klossY, 94, 3), Content.Load<SoundEffect>("270343__littlerobotsoundfactory__shoot-01")));
                 }
             }
-            
 
             // TODO: use this.Content to load your game content here 
         }
@@ -98,14 +96,17 @@ namespace Template
             boll.Update(gameTime);
             // TODO: Add your update logic here
 
+            //bollen studsar om den träffar spelaren
             if (boll.Rec.Intersects(spelare.Rec))
             {
                 boll.StudsaBräda();
             }
             foreach (Kloss element in klosslista)
             {
+                //studsar om den träffar en kloss
                 if (boll.Rec.Intersects(element.Rec))
                 {
+                    //studsar åt rätt håll
                     if (boll.Rec.Intersects(element.Rec2))
                     {
                         boll.StudsaX(false);
@@ -132,6 +133,7 @@ namespace Template
                     }
                 }
             }
+            //studsa på väggarna
             if (boll.Rec.Intersects(vägg1))
             {
                 boll.StudsaX(true);
